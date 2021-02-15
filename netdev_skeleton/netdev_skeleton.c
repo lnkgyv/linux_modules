@@ -1,6 +1,8 @@
 #include <linux/init.h> 
 #include <linux/module.h>
 
+#include <linux/etherdevice.h>
+
 #include <linux/netdevice.h>
 
 MODULE_LICENSE( "GPL" );
@@ -36,10 +38,21 @@ static int netdev_skeleton_start_xmit(struct sk_buff *skb, struct net_device *de
 	return 0;
 }
 
+static int netdev_skeleton_change_addr(struct net_device *dev, void *addr)
+{
+	if (eth_prepare_mac_addr_change(dev, addr) == -EADDRNOTAVAIL)
+		return -EADDRNOTAVAIL;
+
+	eth_commit_mac_addr_change(dev, addr);
+
+	return 0;
+}
+
 static struct net_device_ops ndo = {
 	.ndo_open = netdev_skeleton_open,
 	.ndo_stop = netdev_skeleton_stop,
 	.ndo_start_xmit = netdev_skeleton_start_xmit,
+	.ndo_set_mac_address = netdev_skeleton_change_addr,
 };
 
 static void netdev_setup(struct net_device *dev)
