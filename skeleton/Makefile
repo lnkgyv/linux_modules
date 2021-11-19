@@ -10,7 +10,7 @@ default:
 	$(MAKE) -C $(KDIR) M=$(PWD) modules
 
 clean:
-	@rm -f *.ko *.mod *.o .*.cmd .*.flags *.mod.c *.order
-	@rm -f .*.*.cmd *.symvers *~ *.*~ TODO.*
+	@rm -f *.ko *.mod *.o .*.cmd .*.flags *.mod.c *.order *.dwo
+	@rm -f .*.*.cmd *.symvers *~ *.*~ TODO.* .*.dwo
 	@rm -fR .tmp*
 	@rm -rf .tmp_versions
