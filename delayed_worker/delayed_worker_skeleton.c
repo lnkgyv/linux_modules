@@ -13,7 +13,7 @@ struct delayed_work delayed_work;
 void delayed_work_handler(struct work_struct *work) {
 	pr_info("Delayed work handler invoked %u times\n", ++counter);
 
-	/* delayed worker inkoke itself in every 5 sec */
+	/* delayed worker invoke itself in every 5 sec */
 	schedule_delayed_work(&delayed_work, 5 * HZ);
 }
 
